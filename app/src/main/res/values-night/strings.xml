@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="meeting_name">Meeting Name</string>
+    <string name="time">Time</string>
+    <string name="title_add">Title</string>
+    <string name="start_add">Start</string>
+    <string name="time_add">Time</string>
+    <string name="end_add">End</string>
+    <string name="add_invitee">Add Invitee</string>
+    <string name="add_button">ADD</string>
+</resources>

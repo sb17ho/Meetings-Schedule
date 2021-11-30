@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="8dp"
+    tools:context=".fragments.AddMeetingFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="100"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/meeting_title_id"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="10"
+            android:background="@drawable/border"
+            android:hint="@string/title_add"
+            android:padding="10dp"
+            android:textSize="26sp"
+            android:importantForAutofill="no"
+            android:inputType="textCapSentences" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="8"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/start_add"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/start_time_id"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/time_add"
+                android:textAlignment="textEnd"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="8"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/end_add"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/end_time_id"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textAlignment="viewEnd"
+                android:text="@string/time_add"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="10"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:hint="@string/add_invitee"
+            android:padding="10dp"
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/ic_baseline_person_24" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/add_meeting_add_screen"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_weight="8"
+            android:padding="5dp"
+            android:text="@string/add_button" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
