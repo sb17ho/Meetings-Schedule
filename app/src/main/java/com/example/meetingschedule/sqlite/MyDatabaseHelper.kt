@@ -5,8 +5,8 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import android.widget.Toast
-import com.example.meetingschedule.MainActivity
 import com.example.meetingschedule.model.MeetingModelClass
 
 class MyDatabaseHelper(context: Context) :
@@ -21,7 +21,8 @@ class MyDatabaseHelper(context: Context) :
         private const val DATE_COLUMN = "meetings_date"
         private const val MONTH_COLUMN = "meetings_month"
         private const val YEAR_COLUMN = "meetings_year"
-        private const val TIME_COLUMN = "meetings_time"
+        private const val START_TIME_COLUMN = "meetings_time_start"
+        private const val END_TIME_COLUMN = "meetings_time_end"
         private const val CONTACT_NAME_COLUMN = "meetings_contact_name"
         private const val CONTACT_ID_COLUMN = "meetings_contact_id"
         private const val CONTACT_NUMBER_COLUMN = "meetings_contact_number"
@@ -30,7 +31,8 @@ class MyDatabaseHelper(context: Context) :
     override fun onCreate(db: SQLiteDatabase) {
         val query: String =
             "CREATE TABLE $TABLE_NAME ($COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, $NAME_COLUMN TEXT," +
-                    " $DATE_COLUMN TEXT, $TIME_COLUMN TEXT, $CONTACT_ID_COLUMN TEXT, $CONTACT_NAME_COLUMN TEXT, $CONTACT_NUMBER_COLUMN TEXT)"
+                    " $DATE_COLUMN TEXT, $MONTH_COLUMN TEXT, $YEAR_COLUMN TEXT, $START_TIME_COLUMN TEXT, $END_TIME_COLUMN TEXT, " +
+                    "$CONTACT_ID_COLUMN TEXT, $CONTACT_NAME_COLUMN TEXT, $CONTACT_NUMBER_COLUMN TEXT)"
 
         db.execSQL(query)
     }
@@ -40,41 +42,42 @@ class MyDatabaseHelper(context: Context) :
         onCreate(db)
     }
 
-    fun insertMeeting(meeting: MeetingModelClass) {
+    fun insertMeeting(meeting: MeetingModelClass, context: Context) {
         val sqlInstance: SQLiteDatabase = this.writableDatabase
-        val contentValues = ContentValues()
-
-        contentValues.put(NAME_COLUMN, meeting.name)
-        contentValues.put(DATE_COLUMN, meeting.dd)
-        contentValues.put(DATE_COLUMN, meeting.mm)
-        contentValues.put(DATE_COLUMN, meeting.yy)
-        contentValues.put(TIME_COLUMN, meeting.time)
-        contentValues.put(CONTACT_ID_COLUMN, meeting.contactID)
-        contentValues.put(CONTACT_NAME_COLUMN, meeting.contactName)
-        contentValues.put(CONTACT_NUMBER_COLUMN, meeting.contactNumber)
+        val contentValues = ContentValues().apply {
+            put(NAME_COLUMN, meeting.name)
+            put(DATE_COLUMN, meeting.dd)
+            put(MONTH_COLUMN, meeting.mm)
+            put(YEAR_COLUMN, meeting.yy)
+            put(START_TIME_COLUMN, meeting.startTime)
+            put(END_TIME_COLUMN, meeting.endTime)
+            put(CONTACT_ID_COLUMN, meeting.contactID)
+            put(CONTACT_NAME_COLUMN, meeting.contactName)
+            put(CONTACT_NUMBER_COLUMN, meeting.contactNumber)
+        }
 
         val databaseReturn: Long = sqlInstance.insert(TABLE_NAME, null, contentValues)
         if (databaseReturn.toInt() == -1) {
-            Toast.makeText(MainActivity().applicationContext, "Failed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(MainActivity().applicationContext, "Contact Added", Toast.LENGTH_SHORT)
+            Toast.makeText(context, "Contact Added", Toast.LENGTH_SHORT)
                 .show()
         }
     }
 
     //TODO: Should I use Global Async?
-    fun readCurrentDateMeetings(date: Int, month: Int, year: Int): Cursor {
+    fun readCurrentDateMeetings(date: String, month: String, year: String): Cursor {
         val dbRead = readableDatabase
         return dbRead.rawQuery(
-            "SELECT * FROM $TABLE_NAME WHERE $DATE_COLUMN = $date AND $MONTH_COLUMN = $month AND $YEAR_COLUMN = $year",
+            "SELECT * FROM $TABLE_NAME WHERE $DATE_COLUMN = $date  AND $MONTH_COLUMN = $month AND $YEAR_COLUMN = $year",
             null
         )
     }
 
-    fun readCurrentMonthMeetings(date: Int, month: Int, year: Int): Cursor {
+    fun readAllMeeting(): Cursor {
         val dbRead = readableDatabase
         return dbRead.rawQuery(
-            "SELECT * FROM $TABLE_NAME WHERE $MONTH_COLUMN = $month AND $YEAR_COLUMN = $year",
+            "SELECT * FROM $TABLE_NAME",
             null
         )
     }

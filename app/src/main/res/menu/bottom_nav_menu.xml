@@ -13,16 +13,5 @@
         android:icon="@drawable/ic_baseline_summary_24"
         android:title="Summary"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/trash_page"
-        android:icon="@drawable/ic_baseline_trash_24"
-        android:title="Trash"
-        app:showAsAction="always" />
-
-    <item
-        android:id="@+id/settings_page"
-        android:icon="@drawable/ic_baseline_settings_24"
-        android:title="Settings"
-        app:showAsAction="always" />
 
 </menu>

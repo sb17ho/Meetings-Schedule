@@ -27,10 +27,10 @@
             android:layout_weight="10"
             android:background="@drawable/border"
             android:hint="@string/title_add"
-            android:padding="10dp"
-            android:textSize="26sp"
             android:importantForAutofill="no"
-            android:inputType="textCapSentences" />
+            android:inputType="textCapSentences"
+            android:padding="10dp"
+            android:textSize="26sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,22 +39,35 @@
             android:layout_marginEnd="4dp"
             android:layout_weight="8"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="100">
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="20"
                 android:padding="5dp"
                 android:text="@string/start_add"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/start_time_id"
-                android:layout_width="250dp"
+                android:id="@+id/month_date_start_id"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:gravity="end"
                 android:padding="5dp"
-                android:text="@string/time_add"
+                android:text="@string/date_month"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/start_time_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:padding="5dp"
+                android:hint="@string/time_add"
                 android:textAlignment="textEnd"
                 android:textSize="16sp" />
 
@@ -67,23 +80,36 @@
             android:layout_marginEnd="4dp"
             android:layout_weight="8"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="100">
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="20"
                 android:padding="5dp"
                 android:text="@string/end_add"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/end_time_id"
-                android:layout_width="250dp"
+                android:id="@+id/month_date_end_id"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:gravity="end"
                 android:padding="5dp"
+                android:text="@string/date_month"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/end_time_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:padding="5dp"
+                android:hint="@string/time_add"
                 android:textAlignment="viewEnd"
-                android:text="@string/time_add"
                 android:textSize="16sp" />
 
         </LinearLayout>

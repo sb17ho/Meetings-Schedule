@@ -19,8 +19,8 @@
         android:name="com.example.meetingschedule.fragments.AddMeetingFragment"
         android:label="fragment_add_meeting"
         tools:layout="@layout/fragment_add_meeting" >
-        <action
-            android:id="@+id/action_addMeetingFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+        <argument
+            android:name="date"
+            app:argType="string" />
     </fragment>
 </navigation>
