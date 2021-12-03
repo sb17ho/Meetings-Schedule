@@ -42,14 +42,19 @@ class HomeFragment : Fragment() {
         homeBind.apply {
             calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
                 currDate = "$dayOfMonth:${month + 1}:$year"
-                recyclerAdapter.setMeetingsList(
-                    sharedViewModel.readMeetings(
-                        dayOfMonth.toString(),
-                        (month + 1).toString(),
-                        year.toString(),
-                        requireContext()
-                    )
+                sharedViewModel.readMeetings(
+                    dayOfMonth,
+                    (month + 1),
+                    year,
+                    requireContext()
                 )
+                sharedViewModel.liveMeetingsList.value = sharedViewModel.readMeetingsList()
+                sharedViewModel.liveMeetingsList.observe(viewLifecycleOwner) {
+                    recyclerAdapter.setMeetingsList(
+                        sharedViewModel.readMeetingsList()
+                    )
+                }
+
             }
 
             recyclerViewId.layoutManager = LinearLayoutManager(requireContext())
@@ -57,14 +62,27 @@ class HomeFragment : Fragment() {
         }
 
         val splitCurrDate = currDate.split(":")
-        recyclerAdapter.setMeetingsList(
-            sharedViewModel.readMeetings(
-                splitCurrDate[0],
-                splitCurrDate[1],
-                splitCurrDate[2],
-                requireContext()
-            )
+        sharedViewModel.readMeetings(
+            splitCurrDate[0].toInt(),
+            splitCurrDate[1].toInt(),
+            splitCurrDate[2].toInt(),
+            requireContext()
         )
+
+        sharedViewModel.liveMeetingsList.value = sharedViewModel.readMeetingsList()
+        sharedViewModel.liveMeetingsList.observe(viewLifecycleOwner) {
+            recyclerAdapter.setMeetingsList(
+                sharedViewModel.readMeetingsList()
+            )
+        }
+
+        Log.w("ALL MEETINGS", sharedViewModel.readAllMeetings(requireContext()).toString())
+//        Log.w("ALL MEETINGS BY DATE", sharedViewModel.readMeetings(
+//            splitCurrDate[0],
+//            splitCurrDate[1],
+//            splitCurrDate[2],
+//            requireContext()
+//        ).toString())
 
         return homeBind.root
     }

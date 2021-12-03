@@ -5,7 +5,6 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 import android.widget.Toast
 import com.example.meetingschedule.model.MeetingModelClass
 
@@ -31,7 +30,7 @@ class MyDatabaseHelper(context: Context) :
     override fun onCreate(db: SQLiteDatabase) {
         val query: String =
             "CREATE TABLE $TABLE_NAME ($COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, $NAME_COLUMN TEXT," +
-                    " $DATE_COLUMN TEXT, $MONTH_COLUMN TEXT, $YEAR_COLUMN TEXT, $START_TIME_COLUMN TEXT, $END_TIME_COLUMN TEXT, " +
+                    " $DATE_COLUMN INTEGER, $MONTH_COLUMN INTEGER, $YEAR_COLUMN INTEGER, $START_TIME_COLUMN TEXT, $END_TIME_COLUMN TEXT, " +
                     "$CONTACT_ID_COLUMN TEXT, $CONTACT_NAME_COLUMN TEXT, $CONTACT_NUMBER_COLUMN TEXT)"
 
         db.execSQL(query)
@@ -66,7 +65,7 @@ class MyDatabaseHelper(context: Context) :
     }
 
     //TODO: Should I use Global Async?
-    fun readCurrentDateMeetings(date: String, month: String, year: String): Cursor {
+    fun readCurrentDateMeetings(date: Int, month: Int, year: Int): Cursor {
         val dbRead = readableDatabase
         return dbRead.rawQuery(
             "SELECT * FROM $TABLE_NAME WHERE $DATE_COLUMN = $date  AND $MONTH_COLUMN = $month AND $YEAR_COLUMN = $year",

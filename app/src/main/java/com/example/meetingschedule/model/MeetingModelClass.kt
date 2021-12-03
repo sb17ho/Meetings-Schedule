@@ -3,9 +3,9 @@ package com.example.meetingschedule.model
 //TODO: Probably have start and end time for meetings
 data class MeetingModelClass(
     val name: String,
-    val dd: String,
-    val mm: String,
-    val yy: String,
+    val dd: Int,
+    val mm: Int,
+    val yy: Int,
     val startTime: String,
     val endTime: String,
     val contactName: String,

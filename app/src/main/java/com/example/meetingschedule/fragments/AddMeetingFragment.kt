@@ -58,8 +58,6 @@ class AddMeetingFragment : Fragment() {
                     requireContext(),
                     android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                     { view, hourOfDay, minute ->
-                        view.hour = hourOfDay //TODO NOT WORKING
-                        view.minute = minute
                         val timeOfDay = "$hourOfDay:$minute"
                         val time24Format = SimpleDateFormat("HH:mm", Locale.getDefault())
                         try {
@@ -81,8 +79,6 @@ class AddMeetingFragment : Fragment() {
                     requireContext(),
                     android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                     { view, hourOfDay, minute ->
-                        view.currentHour = startTimeId.text.split(":")[0].toInt()
-                        view.currentMinute = startTimeId.text.split(":")[1].toInt()
                         val timeOfDay = "$hourOfDay:$minute"
                         val time24Format = SimpleDateFormat("HH:mm", Locale.CANADA)
                         try {
@@ -151,9 +147,9 @@ class AddMeetingFragment : Fragment() {
     private fun addMeetingToCurrDate() {
         val modelClass = MeetingModelClass(
             name = addFragBind.meetingTitleId.text.toString(),
-            dd = dateArr[0],
-            mm = dateArr[1],
-            yy = dateArr[2],
+            dd = dateArr[0].toInt(),
+            mm = dateArr[1].toInt(),
+            yy = dateArr[2].toInt(),
             startTime = addFragBind.startTimeId.text.toString(),
             endTime = addFragBind.endTimeId.text.toString(),
             contactID = "null",
