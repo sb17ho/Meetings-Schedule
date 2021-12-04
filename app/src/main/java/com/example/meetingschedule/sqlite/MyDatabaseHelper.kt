@@ -59,12 +59,11 @@ class MyDatabaseHelper(context: Context) :
         if (databaseReturn.toInt() == -1) {
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(context, "Contact Added", Toast.LENGTH_SHORT)
+            Toast.makeText(context, "Meeting Added", Toast.LENGTH_SHORT)
                 .show()
         }
     }
 
-    //TODO: Should I use Global Async?
     fun readCurrentDateMeetings(date: Int, month: Int, year: Int): Cursor {
         val dbRead = readableDatabase
         return dbRead.rawQuery(

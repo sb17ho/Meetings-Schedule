@@ -1,7 +1,6 @@
 package com.example.meetingschedule.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -13,7 +12,6 @@ import com.example.meetingschedule.adapters.HomeRecyclerAdapter
 import com.example.meetingschedule.databinding.FragmentHomeBinding
 import com.example.meetingschedule.viewModel.SharedViewModel
 import java.util.*
-
 
 class HomeFragment : Fragment() {
     private lateinit var homeBind: FragmentHomeBinding
@@ -75,14 +73,6 @@ class HomeFragment : Fragment() {
                 sharedViewModel.readMeetingsList()
             )
         }
-
-        Log.w("ALL MEETINGS", sharedViewModel.readAllMeetings(requireContext()).toString())
-//        Log.w("ALL MEETINGS BY DATE", sharedViewModel.readMeetings(
-//            splitCurrDate[0],
-//            splitCurrDate[1],
-//            splitCurrDate[2],
-//            requireContext()
-//        ).toString())
 
         return homeBind.root
     }

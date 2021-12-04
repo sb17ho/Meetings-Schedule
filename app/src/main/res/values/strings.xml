@@ -14,4 +14,5 @@
     <string name="add_invitee">Add Invitee</string>
     <string name="add_button">ADD</string>
     <string name="date_month">Date Month</string>
+    <string name="date">Date</string>
 </resources>

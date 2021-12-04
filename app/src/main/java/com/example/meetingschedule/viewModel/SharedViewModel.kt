@@ -14,6 +14,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     private var READ_PERMISSION_GRANTED = false
     private val meetingsList: ArrayList<MeetingModelClass> = ArrayList()
     val liveMeetingsList: MutableLiveData<ArrayList<MeetingModelClass>> = MutableLiveData()
+    val liveAllMeetingsList: MutableLiveData<ArrayList<MeetingModelClass>> = MutableLiveData()
     private val allMeetings: ArrayList<MeetingModelClass> = ArrayList()
 
     private val databaseHelper: MyDatabaseHelper by lazy {
@@ -87,10 +88,31 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                     )
                 )
             }
+            allMeetings.sortWith(object : Comparator<MeetingModelClass> {
+                override fun compare(o1: MeetingModelClass?, o2: MeetingModelClass?): Int {
+                    if (o1 != null && o2 != null) {
+                        var i = o1.yy.compareTo(o2.yy)
+                        if (i != 0) return i
+
+                        i = o1.mm.compareTo(o2.mm)
+                        if (i != 0) return i
+
+                        return Integer.compare(o1.dd, o2.dd)
+                    } else if (o1 == null && o2 != null) {
+                        return 1
+                    } else if (o1 != null && o2 == null) {
+                        return -1
+                    } else {
+                        return 0
+                    }
+                }
+            })
         }
     }
 
     fun readMeetingsList(): ArrayList<MeetingModelClass> = meetingsList
+
+    fun readAllMeetingsList(): ArrayList<MeetingModelClass> = allMeetings
 
     fun readMeetings(
         date: Int,
