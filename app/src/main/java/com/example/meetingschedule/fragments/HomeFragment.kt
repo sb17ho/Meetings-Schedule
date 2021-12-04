@@ -52,7 +52,6 @@ class HomeFragment : Fragment() {
                         sharedViewModel.readMeetingsList()
                     )
                 }
-
             }
 
             recyclerViewId.layoutManager = LinearLayoutManager(requireContext())
