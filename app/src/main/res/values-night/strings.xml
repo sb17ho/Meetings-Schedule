@@ -10,4 +10,7 @@
     <string name="add_button">ADD</string>
     <string name="date_month">Date Month</string>
     <string name="date">Date</string>
+    <string name="add_meeting">Add Meeting</string>
+    <string name="delete_all">Delete All</string>
+    <string name="delete_today_meetings">Delete Today Meetings</string>
 </resources>

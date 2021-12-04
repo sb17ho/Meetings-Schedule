@@ -34,10 +34,7 @@ class HomeRecyclerAdapter : RecyclerView.Adapter<HomeRecyclerAdapter.MyRecyclerA
     override fun getItemCount(): Int = meetings_list.size
 
     fun setMeetingsList(meetings_list: List<MeetingModelClass>) {
-//        val diffUtil = MeetingsDiffUtil(this.meetings_list, meetings_list)
-//        val diffResult = DiffUtil.calculateDiff(diffUtil)
         this.meetings_list = meetings_list
         notifyDataSetChanged()
-//        diffResult.dispatchUpdatesTo(this)
     }
 }

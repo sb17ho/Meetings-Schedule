@@ -79,4 +79,16 @@ class MyDatabaseHelper(context: Context) :
             null
         )
     }
+
+    fun deleteAllMeetingsInDatabase() {
+        val dbWrite = writableDatabase
+        dbWrite.execSQL("DELETE FROM $TABLE_NAME")
+        dbWrite.close()
+    }
+
+    fun deleteAllTodayMeetings(date: Int, month: Int, year: Int) {
+        val dbWrite = writableDatabase
+        dbWrite.execSQL("DELETE FROM $TABLE_NAME WHERE $DATE_COLUMN = $date  AND $MONTH_COLUMN = $month AND $YEAR_COLUMN = $year")
+        dbWrite.close()
+    }
 }

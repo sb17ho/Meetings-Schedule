@@ -129,6 +129,21 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         return allMeetings
     }
 
+    fun deleteAllTodayMeetings(
+        date: Int,
+        month: Int,
+        year: Int,
+        context: Context
+    ) {
+        databaseHelper.deleteAllTodayMeetings(date, month, year)
+        meetingsList.clear()
+    }
+
+    fun deleteAllMeetings() {
+        databaseHelper.deleteAllMeetingsInDatabase()
+        allMeetings.clear()
+    }
+
     fun parseMonthIntToString(month: Int): String {
         return when (month) {
             1 -> "Jan"

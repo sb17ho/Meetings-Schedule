@@ -1,12 +1,13 @@
 package com.example.meetingschedule.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.meetingschedule.MainActivity
+import com.example.meetingschedule.R
 import com.example.meetingschedule.adapters.SummaryRecyclerAdapter
 import com.example.meetingschedule.databinding.FragmentSummaryBinding
 import com.example.meetingschedule.viewModel.SharedViewModel
@@ -25,6 +26,7 @@ class SummaryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         summaryBinding = FragmentSummaryBinding.inflate(layoutInflater, container, false)
+        setHasOptionsMenu(true)
 
         summaryBinding.apply {
             summaryRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -43,12 +45,23 @@ class SummaryFragment : Fragment() {
         return summaryBinding.root
     }
 
-}
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.delete_all, menu)
+    }
 
-//        Log.w("ALL MEETINGS", sharedViewModel.readAllMeetings(requireContext()).toString())
-//        Log.w("ALL MEETINGS BY DATE", sharedViewModel.readMeetings(
-//            splitCurrDate[0],
-//            splitCurrDate[1],
-//            splitCurrDate[2],
-//            requireContext()
-//        ).toString())
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.delete_all_button) {
+            sharedViewModel.deleteAllMeetings()
+            sharedViewModel.liveAllMeetingsList.value = sharedViewModel.readAllMeetingsList()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    //To override the action bar title
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity)
+            .setActionBarTitle("Summary")
+    }
+
+}

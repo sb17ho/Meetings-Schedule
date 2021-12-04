@@ -84,6 +84,15 @@ class HomeFragment : Fragment() {
         if (item.itemId == R.id.add_button) {
             homeBind.root.findNavController()
                 .navigate(HomeFragmentDirections.actionHomeFragmentToAddMeetingFragment(currDate))
+        } else if (item.itemId == R.id.delete_all_today_button) {
+            val splitCurrDate = currDate.split(":")
+            sharedViewModel.deleteAllTodayMeetings(
+                splitCurrDate[0].toInt(),
+                splitCurrDate[1].toInt(),
+                splitCurrDate[2].toInt(),
+                requireContext()
+            )
+            sharedViewModel.liveMeetingsList.value = sharedViewModel.readMeetingsList()
         }
         return super.onOptionsItemSelected(item)
     }
