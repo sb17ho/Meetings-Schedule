@@ -92,6 +92,23 @@ class MyDatabaseHelper(context: Context) :
         dbWrite.close()
     }
 
+    fun deleteSelectedMeeting(meeting: MeetingModelClass) {
+        val dbWrite = writableDatabase
+        dbWrite.delete(
+            TABLE_NAME,
+            "$NAME_COLUMN=? and $DATE_COLUMN=? and $MONTH_COLUMN=? and $YEAR_COLUMN=? and $START_TIME_COLUMN=? and $END_TIME_COLUMN=?",
+            arrayOf(
+                meeting.name,
+                meeting.dd.toString(),
+                meeting.mm.toString(),
+                meeting.yy.toString(),
+                meeting.startTime,
+                meeting.endTime
+            )
+        )
+        dbWrite.close()
+    }
+
     fun updateDate(
         currDate: Int,
         currMonth: Int,
@@ -114,3 +131,13 @@ class MyDatabaseHelper(context: Context) :
     }
 
 }
+
+/*dbWrite.execSQL(
+            "DELETE FROM $TABLE_NAME WHERE $NAME_COLUMN = ${meeting.name} AND " +
+                    "$DATE_COLUMN = ${meeting.dd} AND " +
+                    "$MONTH_COLUMN = ${meeting.mm} AND " +
+                    "$YEAR_COLUMN = ${meeting.yy} AND " +
+                    "$START_TIME_COLUMN = ${meeting.startTime} AND " +
+                    "$END_TIME_COLUMN = ${meeting.endTime}"
+        )
+        dbWrite.close()*/

@@ -155,6 +155,10 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         databaseHelper.updateDate(currDate, currMonth, currYear, newDate, newMonth, newYear)
     }
 
+    fun deleteSelectedMeeting(meetings: MeetingModelClass) {
+        databaseHelper.deleteSelectedMeeting(meetings)
+    }
+
     fun parseMonthIntToString(month: Int): String {
         return when (month) {
             1 -> "Jan"

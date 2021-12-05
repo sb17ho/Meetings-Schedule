@@ -11,6 +11,7 @@ import com.example.meetingschedule.MainActivity
 import com.example.meetingschedule.R
 import com.example.meetingschedule.adapters.HomeRecyclerAdapter
 import com.example.meetingschedule.databinding.FragmentHomeBinding
+import com.example.meetingschedule.model.MeetingModelClass
 import com.example.meetingschedule.viewModel.SharedViewModel
 import java.util.*
 
@@ -73,6 +74,19 @@ class HomeFragment : Fragment() {
                 sharedViewModel.readMeetingsList()
             )
         }
+
+        recyclerAdapter.setOnItemClickListener(object : HomeRecyclerAdapter.OnItemClickListener {
+            override fun onItemClickListener(meetings: MeetingModelClass) {
+                sharedViewModel.deleteSelectedMeeting(meetings)
+                sharedViewModel.readMeetings(
+                    splitCurrDate[0].toInt(),
+                    splitCurrDate[1].toInt(),
+                    splitCurrDate[2].toInt(),
+                    requireContext()
+                )
+                sharedViewModel.liveMeetingsList.value = sharedViewModel.readMeetingsList()
+            }
+        })
 
         return homeBind.root
     }

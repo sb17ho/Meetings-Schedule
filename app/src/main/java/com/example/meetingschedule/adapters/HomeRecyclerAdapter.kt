@@ -10,8 +10,14 @@ class HomeRecyclerAdapter : RecyclerView.Adapter<HomeRecyclerAdapter.MyRecyclerA
 
     var meetings_list: List<MeetingModelClass> = emptyList()
 
-    class MyRecyclerAdapter(val meetingsCardBind: MeetingsCardViewBinding) :
-        RecyclerView.ViewHolder(meetingsCardBind.root)
+    inner class MyRecyclerAdapter(val meetingsCardBind: MeetingsCardViewBinding) :
+        RecyclerView.ViewHolder(meetingsCardBind.root) {
+        init {
+            meetingsCardBind.deleteImage.setOnClickListener {
+                itemOnClick.onItemClickListener(meetings_list[adapterPosition])
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyRecyclerAdapter =
         MyRecyclerAdapter(
@@ -36,5 +42,17 @@ class HomeRecyclerAdapter : RecyclerView.Adapter<HomeRecyclerAdapter.MyRecyclerA
     fun setMeetingsList(meetings_list: List<MeetingModelClass>) {
         this.meetings_list = meetings_list
         notifyDataSetChanged()
+    }
+
+    lateinit var itemOnClick: OnItemClickListener
+
+    interface OnItemClickListener {
+        fun onItemClickListener(
+            meetings: MeetingModelClass
+        )
+    }
+
+    fun setOnItemClickListener(listenerUI: OnItemClickListener) {
+        this.itemOnClick = listenerUI
     }
 }
