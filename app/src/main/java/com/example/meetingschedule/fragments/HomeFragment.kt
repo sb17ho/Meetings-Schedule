@@ -1,6 +1,7 @@
 package com.example.meetingschedule.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -113,15 +114,19 @@ class HomeFragment : Fragment() {
         } else if (item.itemId == R.id.push_to_next_day) {
             val splitCurrDate = currDate.split(":")
 
+            Log.w("DAY OF WEEK", Calendar.DAY_OF_WEEK.toString())
+            Log.w("DATE", Calendar.DATE.toString())
+            Log.w("SATURDAY", Calendar.MONDAY.toString())
+
             val gregCalendar: Calendar = GregorianCalendar()
-            if (Calendar.DAY_OF_WEEK == Calendar.SATURDAY) {
-                gregCalendar.add(Calendar.DATE, 7)
-            } else if (Calendar.DAY_OF_WEEK == Calendar.SUNDAY) {
-                gregCalendar.add(Calendar.DATE, 6)
-            } else if (Calendar.DAY_OF_WEEK == Calendar.MONDAY ||
-                Calendar.DAY_OF_WEEK == Calendar.TUESDAY ||
-                Calendar.DAY_OF_WEEK == Calendar.WEDNESDAY ||
-                Calendar.DAY_OF_WEEK == Calendar.THURSDAY
+            if (Calendar.DAY_OF_WEEK == 6) {
+                gregCalendar.add(Calendar.DATE, 7) //SATURDAY
+            } else if (Calendar.DAY_OF_WEEK == 7) {
+                gregCalendar.add(Calendar.DATE, 6) //SUNDAY
+            } else if (Calendar.DAY_OF_WEEK == 1 ||
+                Calendar.DAY_OF_WEEK == 2 ||
+                Calendar.DAY_OF_WEEK == 3 ||
+                Calendar.DAY_OF_WEEK == 4
             ) {
                 gregCalendar.add(Calendar.DATE, 1)
             } else {
