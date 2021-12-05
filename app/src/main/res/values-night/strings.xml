@@ -13,4 +13,7 @@
     <string name="add_meeting">Add Meeting</string>
     <string name="delete_all">Delete All</string>
     <string name="delete_today_meetings">Delete Today Meetings</string>
+    <string name="push_meetings">Push Meetings</string>
+    <string name="home_bottom">Home</string>
+    <string name="all_meetings_bottom">All Meetings</string>
 </resources>

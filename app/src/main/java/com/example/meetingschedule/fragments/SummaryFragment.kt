@@ -2,6 +2,7 @@ package com.example.meetingschedule.fragments
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -53,6 +54,7 @@ class SummaryFragment : Fragment() {
         if (item.itemId == R.id.delete_all_button) {
             sharedViewModel.deleteAllMeetings()
             sharedViewModel.liveAllMeetingsList.value = sharedViewModel.readAllMeetingsList()
+            Toast.makeText(requireContext(), "All Meetings Deleted", Toast.LENGTH_SHORT).show()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -61,7 +63,7 @@ class SummaryFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         (activity as MainActivity)
-            .setActionBarTitle("Summary")
+            .setActionBarTitle("All Meetings")
     }
 
 }

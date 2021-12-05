@@ -2,6 +2,7 @@ package com.example.meetingschedule.fragments
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -93,6 +94,10 @@ class HomeFragment : Fragment() {
                 requireContext()
             )
             sharedViewModel.liveMeetingsList.value = sharedViewModel.readMeetingsList()
+            Toast.makeText(requireContext(), "All Today's Meetings Deleted", Toast.LENGTH_SHORT)
+                .show()
+        } else if (item.itemId == R.id.push_to_next_day) {
+            //TODO("UPDATE THE MEETINGS")
         }
         return super.onOptionsItemSelected(item)
     }

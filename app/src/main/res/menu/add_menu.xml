@@ -9,7 +9,11 @@
 
     <item
         android:id="@+id/delete_all_today_button"
-        android:icon="@drawable/ic_baseline_delete_24"
         android:title="@string/delete_today_meetings"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/push_to_next_day"
+        android:title="@string/push_meetings"
         app:showAsAction="never" />
 </menu>
