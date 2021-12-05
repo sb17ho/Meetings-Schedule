@@ -97,7 +97,38 @@ class HomeFragment : Fragment() {
             Toast.makeText(requireContext(), "All Today's Meetings Deleted", Toast.LENGTH_SHORT)
                 .show()
         } else if (item.itemId == R.id.push_to_next_day) {
-            //TODO("UPDATE THE MEETINGS")
+            val splitCurrDate = currDate.split(":")
+
+            val gregCalendar: Calendar = GregorianCalendar()
+            if (Calendar.DAY_OF_WEEK == Calendar.SATURDAY) {
+                gregCalendar.add(Calendar.DATE, 7)
+            } else if (Calendar.DAY_OF_WEEK == Calendar.SUNDAY) {
+                gregCalendar.add(Calendar.DATE, 6)
+            } else if (Calendar.DAY_OF_WEEK == Calendar.MONDAY ||
+                Calendar.DAY_OF_WEEK == Calendar.TUESDAY ||
+                Calendar.DAY_OF_WEEK == Calendar.WEDNESDAY ||
+                Calendar.DAY_OF_WEEK == Calendar.THURSDAY
+            ) {
+                gregCalendar.add(Calendar.DATE, 1)
+            } else {
+                gregCalendar.add(Calendar.DATE, 3)
+            }
+            val date = gregCalendar.time.toString().split(" ")
+            sharedViewModel.updateDate(
+                splitCurrDate[0].toInt(),
+                splitCurrDate[1].toInt(),
+                splitCurrDate[2].toInt(),
+                date[2].toInt(),
+                sharedViewModel.parseMonthStringToInt(date[1]),
+                date[5].toInt()
+            )
+            sharedViewModel.readMeetings(
+                splitCurrDate[0].toInt(),
+                splitCurrDate[1].toInt(),
+                splitCurrDate[2].toInt(),
+                requireContext()
+            )
+            sharedViewModel.liveMeetingsList.value = sharedViewModel.readMeetingsList()
         }
         return super.onOptionsItemSelected(item)
     }

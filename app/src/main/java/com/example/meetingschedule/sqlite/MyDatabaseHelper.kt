@@ -91,4 +91,26 @@ class MyDatabaseHelper(context: Context) :
         dbWrite.execSQL("DELETE FROM $TABLE_NAME WHERE $DATE_COLUMN = $date  AND $MONTH_COLUMN = $month AND $YEAR_COLUMN = $year")
         dbWrite.close()
     }
+
+    fun updateDate(
+        currDate: Int,
+        currMonth: Int,
+        currYear: Int,
+        newDate: Int,
+        newMonth: Int,
+        newYear: Int
+    ) {
+        val dbWrite = writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(DATE_COLUMN, newDate)
+        contentValues.put(MONTH_COLUMN, newMonth)
+        contentValues.put(YEAR_COLUMN, newYear)
+
+        dbWrite.update(
+            TABLE_NAME, contentValues, "$DATE_COLUMN=? and $MONTH_COLUMN=? and $YEAR_COLUMN=?",
+            arrayOf(currDate.toString(), currMonth.toString(), currYear.toString())
+        )
+        dbWrite.close()
+    }
+
 }

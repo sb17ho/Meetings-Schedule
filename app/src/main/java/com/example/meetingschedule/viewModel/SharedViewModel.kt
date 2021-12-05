@@ -144,6 +144,17 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         allMeetings.clear()
     }
 
+    fun updateDate(
+        currDate: Int,
+        currMonth: Int,
+        currYear: Int,
+        newDate: Int,
+        newMonth: Int,
+        newYear: Int
+    ) {
+        databaseHelper.updateDate(currDate, currMonth, currYear, newDate, newMonth, newYear)
+    }
+
     fun parseMonthIntToString(month: Int): String {
         return when (month) {
             1 -> "Jan"
