@@ -1,7 +1,6 @@
 package com.example.meetingschedule.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -36,6 +35,9 @@ class HomeFragment : Fragment() {
         val getCurrDate: List<String> =
             Calendar.getInstance().time.toString()
                 .split(" ")
+
+        val listOfAllMeetings = sharedViewModel.readAllMeetings(requireContext())
+        MainActivity.column_id_counter = listOfAllMeetings[listOfAllMeetings.size - 1]._id
 
         currDate =
             "${getCurrDate[2]}:${sharedViewModel.parseMonthStringToInt(getCurrDate[1])}:${getCurrDate[5]}"
@@ -115,14 +117,16 @@ class HomeFragment : Fragment() {
             val splitCurrDate = currDate.split(":")
 
             val gregCalendar: Calendar = GregorianCalendar()
-            if (Calendar.DAY_OF_WEEK == 6) {
+            val time = gregCalendar.time.toString().split(" ")
+
+            if (time[0].lowercase() == "sat") {
                 gregCalendar.add(Calendar.DATE, 7) //SATURDAY
-            } else if (Calendar.DAY_OF_WEEK == 7) {
+            } else if (time[0].lowercase() == "sun") {
                 gregCalendar.add(Calendar.DATE, 6) //SUNDAY
-            } else if (Calendar.DAY_OF_WEEK == 1 ||
-                Calendar.DAY_OF_WEEK == 2 ||
-                Calendar.DAY_OF_WEEK == 3 ||
-                Calendar.DAY_OF_WEEK == 4
+            } else if (time[0].lowercase() == "mon" ||
+                time[0].lowercase() == "tue" ||
+                time[0].lowercase() == "wed" ||
+                time[0].lowercase() == "thu"
             ) {
                 gregCalendar.add(Calendar.DATE, 1)
             } else {

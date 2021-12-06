@@ -27,9 +27,10 @@ class MyDatabaseHelper(context: Context) :
         private const val CONTACT_NUMBER_COLUMN = "meetings_contact_number"
     }
 
+    //TODO Did change
     override fun onCreate(db: SQLiteDatabase) {
         val query: String =
-            "CREATE TABLE $TABLE_NAME ($COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, $NAME_COLUMN TEXT," +
+            "CREATE TABLE $TABLE_NAME ($COLUMN_ID INTEGER PRIMARY KEY, $NAME_COLUMN TEXT," +
                     " $DATE_COLUMN INTEGER, $MONTH_COLUMN INTEGER, $YEAR_COLUMN INTEGER, $START_TIME_COLUMN TEXT, $END_TIME_COLUMN TEXT, " +
                     "$CONTACT_ID_COLUMN TEXT, $CONTACT_NAME_COLUMN TEXT, $CONTACT_NUMBER_COLUMN TEXT)"
 
@@ -44,6 +45,7 @@ class MyDatabaseHelper(context: Context) :
     fun insertMeeting(meeting: MeetingModelClass, context: Context) {
         val sqlInstance: SQLiteDatabase = this.writableDatabase
         val contentValues = ContentValues().apply {
+            put(COLUMN_ID, meeting._id) //TODO: Did change
             put(NAME_COLUMN, meeting.name)
             put(DATE_COLUMN, meeting.dd)
             put(MONTH_COLUMN, meeting.mm)
@@ -96,8 +98,9 @@ class MyDatabaseHelper(context: Context) :
         val dbWrite = writableDatabase
         dbWrite.delete(
             TABLE_NAME,
-            "$NAME_COLUMN=? and $DATE_COLUMN=? and $MONTH_COLUMN=? and $YEAR_COLUMN=? and $START_TIME_COLUMN=? and $END_TIME_COLUMN=?",
+            "$COLUMN_ID=? and $NAME_COLUMN=? and $DATE_COLUMN=? and $MONTH_COLUMN=? and $YEAR_COLUMN=? and $START_TIME_COLUMN=? and $END_TIME_COLUMN=?",
             arrayOf(
+                meeting._id.toString(), //TODO Did Change
                 meeting.name,
                 meeting.dd.toString(),
                 meeting.mm.toString(),
@@ -130,9 +133,11 @@ class MyDatabaseHelper(context: Context) :
         dbWrite.close()
     }
 
+    //TODO Did change
     fun updateSelectedMeeting(oldMeeting: MeetingModelClass, newMeeting: MeetingModelClass) {
         val dbWrite = writableDatabase
         val contentValues = ContentValues().apply {
+            put(COLUMN_ID, newMeeting._id)
             put(NAME_COLUMN, newMeeting.name)
             put(DATE_COLUMN, newMeeting.dd)
             put(MONTH_COLUMN, newMeeting.mm)
@@ -146,8 +151,9 @@ class MyDatabaseHelper(context: Context) :
         dbWrite.update(
             TABLE_NAME,
             contentValues,
-            "$NAME_COLUMN=? and $DATE_COLUMN=? and $MONTH_COLUMN=? and $YEAR_COLUMN=? and $START_TIME_COLUMN=? and $END_TIME_COLUMN=?",
+            "$COLUMN_ID=? and $NAME_COLUMN=? and $DATE_COLUMN=? and $MONTH_COLUMN=? and $YEAR_COLUMN=? and $START_TIME_COLUMN=? and $END_TIME_COLUMN=?",
             arrayOf(
+                oldMeeting._id.toString(),
                 oldMeeting.name,
                 oldMeeting.dd.toString(),
                 oldMeeting.mm.toString(),

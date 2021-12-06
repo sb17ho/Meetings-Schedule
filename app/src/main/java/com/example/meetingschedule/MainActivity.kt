@@ -12,7 +12,7 @@ import com.example.meetingschedule.viewModel.SharedViewModel
 
 class MainActivity : AppCompatActivity() {
     companion object {
-        var column_id_counter = 1
+        var column_id_counter: Long = 0
     }
 
     private val viewModel: SharedViewModel by lazy {

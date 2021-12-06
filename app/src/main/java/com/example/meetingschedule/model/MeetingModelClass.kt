@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class MeetingModelClass(
+    val _id: Long,
     val name: String,
     val dd: Int,
     val mm: Int,

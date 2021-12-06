@@ -195,6 +195,7 @@ class AddMeetingFragment : Fragment() {
 
     private fun addMeetingToCurrDate() {
         val modelClass = MeetingModelClass(
+            _id = ++(MainActivity.column_id_counter), //TODO Did Change
             name = addFragBind.meetingTitleId.text.toString(),
             dd = dateArr[0].toInt(),
             mm = dateArr[1].toInt(),

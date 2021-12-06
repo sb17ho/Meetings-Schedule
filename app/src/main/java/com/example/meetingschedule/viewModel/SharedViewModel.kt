@@ -51,6 +51,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             while (cursor.moveToNext()) {
                 meetingsList.add(
                     MeetingModelClass(
+                        _id = cursor.getLong(0),
                         name = cursor.getString(1),
                         dd = cursor.getInt(2),
                         mm = cursor.getInt(3),
@@ -77,6 +78,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             while (cursor.moveToNext()) {
                 allMeetings.add(
                     MeetingModelClass(
+                        _id = cursor.getLong(0),
                         name = cursor.getString(1),
                         dd = cursor.getInt(2),
                         mm = cursor.getInt(3),

@@ -36,6 +36,7 @@ class UpdateFragment : Fragment() {
             updateMeetingButton.setOnClickListener {
                 val dateArr = date.split(":")
                 val modelClass = MeetingModelClass(
+                    _id = args.meetingModel._id, //TODO: Did Change
                     name = meetingTitleId.text.toString(),
                     dd = dateArr[0].toInt(),
                     mm = dateArr[1].toInt(),
