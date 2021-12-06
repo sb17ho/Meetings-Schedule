@@ -24,4 +24,5 @@
     <string name="update_meeting">Update</string>
     <string name="add_contact">Add Contact</string>
     <string name="delete_contact">Delete Contact</string>
+    <string name="delete_meeting">Delete</string>
 </resources>

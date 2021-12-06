@@ -2,8 +2,10 @@ package com.example.meetingschedule.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.meetingschedule.R
 import com.example.meetingschedule.databinding.MeetingsCardViewBinding
 import com.example.meetingschedule.fragments.HomeFragmentDirections
 import com.example.meetingschedule.model.MeetingModelClass
@@ -15,8 +17,24 @@ class HomeRecyclerAdapter : RecyclerView.Adapter<HomeRecyclerAdapter.MyRecyclerA
     inner class MyRecyclerAdapter(val meetingsCardBind: MeetingsCardViewBinding) :
         RecyclerView.ViewHolder(meetingsCardBind.root) {
         init {
-            meetingsCardBind.deleteImage.setOnClickListener {
-                itemOnClick.onItemClickListener(meetings_list[adapterPosition])
+            meetingsCardBind.additionalFunctionsDropdown.setOnClickListener {
+                val optionsMenu = PopupMenu(it.context, it)
+                optionsMenu.inflate(R.menu.popup_meetings_card)
+
+                optionsMenu.setOnMenuItemClickListener { menuItem ->
+
+                    when (menuItem.itemId) {
+                        R.id.delete_current_meeting -> {
+                            itemOnClick.onItemDeleteListener(meetings_list[adapterPosition])
+                            true
+                        }
+                        else -> {
+                            false
+                        }
+                    }
+
+                }
+                optionsMenu.show()
             }
         }
     }
@@ -55,7 +73,7 @@ class HomeRecyclerAdapter : RecyclerView.Adapter<HomeRecyclerAdapter.MyRecyclerA
     lateinit var itemOnClick: OnItemClickListener
 
     interface OnItemClickListener {
-        fun onItemClickListener(
+        fun onItemDeleteListener(
             meetings: MeetingModelClass
         )
     }
@@ -64,3 +82,7 @@ class HomeRecyclerAdapter : RecyclerView.Adapter<HomeRecyclerAdapter.MyRecyclerA
         this.itemOnClick = listenerUI
     }
 }
+
+//            meetingsCardBind.deleteImage.setOnClickListener {
+//                itemOnClick.onItemClickListener(meetings_list[adapterPosition])
+//            }

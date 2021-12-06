@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/meeting_view_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/meeting_view_card"
     android:layout_marginHorizontal="2dp"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
@@ -12,15 +12,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:padding="10dp"
-        android:weightSum="100"
-        android:orientation="horizontal">
+        android:weightSum="100">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="90"
             android:orientation="vertical"
-            android:layout_weight="80"
             android:weightSum="100">
 
             <TextView
@@ -44,13 +44,22 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/delete_image"
+        <ImageButton
+            android:id="@+id/additional_functions_dropdown"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="20"
+            android:layout_height="35dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_baseline_delete_24"/>
-
+            android:layout_weight="10"
+            android:background="@drawable/ic_baseline_more_vert_24"
+            android:padding="10dp" />
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>
+
+    <!--        <ImageView-->
+    <!--            android:id="@+id/delete_image"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_weight="20"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:src="@drawable/ic_baseline_delete_24"/>-->

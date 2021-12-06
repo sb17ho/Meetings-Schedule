@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/add_contact_pop"
+        android:title="@string/add_contact"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/delete_contact_pop"
+        android:title="@string/delete_contact"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/delete_current_meeting"
+        android:title="@string/delete_meeting"
+        app:showAsAction="never" />
+
+</menu>
