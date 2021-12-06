@@ -1,14 +1,20 @@
 package com.example.meetingschedule.fragments
 
+import android.app.Activity.RESULT_OK
 import android.app.TimePickerDialog
+import android.content.Intent
+import android.database.Cursor
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -30,6 +36,30 @@ class AddMeetingFragment : Fragment() {
     private val dateArr by lazy { args.date.split(":") }
     private lateinit var hr12CurrTime: String
     private var hr24currTime: Date? = null
+
+    private val result =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                val uri = it.data?.data
+                val contactInfoNeeded = arrayOf(
+                    ContactsContract.CommonDataKinds.Phone.NUMBER,
+                    ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
+                )
+
+                val cursor: Cursor? =
+                    requireContext().contentResolver.query(
+                        uri!!,
+                        contactInfoNeeded,
+                        null,
+                        null,
+                        null
+                    )
+                cursor?.moveToFirst()
+
+                addFragBind.contactAddId.text =
+                    cursor?.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -126,7 +156,6 @@ class AddMeetingFragment : Fragment() {
                 }
             }
 
-            //TODO: Add on text change
             addMeetingAddScreen.setOnClickListener {
                 if (meetingTitleId.text.isNullOrBlank() && endTimeId.text.isNullOrBlank()) {
                     meetingTitleId.error = "Field Required"
@@ -141,7 +170,27 @@ class AddMeetingFragment : Fragment() {
             }
         }
 
+        addFragBind.addContactButton.setOnClickListener {
+            pickContact()
+        }
+
+        addFragBind.deleteButton.setOnClickListener {
+            addFragBind.contactAddId.text = null
+        }
+
+        addFragBind.contactAddId.doOnTextChanged { text, _, _, _ ->
+            addFragBind.deleteButton.isEnabled = text!!.isNotEmpty()
+        }
+
         return addFragBind.root
+    }
+
+    private fun pickContact() {
+        result.launch(
+            Intent(Intent.ACTION_PICK, Uri.parse("content://contacts")).setType(
+                ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE
+            )
+        )
     }
 
     private fun addMeetingToCurrDate() {

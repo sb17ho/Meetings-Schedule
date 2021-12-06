@@ -1,6 +1,9 @@
 package com.example.meetingschedule.model
 
-//TODO: Probably have start and end time for meetings
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class MeetingModelClass(
     val name: String,
     val dd: Int,
@@ -11,7 +14,7 @@ data class MeetingModelClass(
     val contactName: String,
     val contactID: String,
     val contactNumber: String
-) {
+) : Parcelable {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

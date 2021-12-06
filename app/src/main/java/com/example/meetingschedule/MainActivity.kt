@@ -11,6 +11,10 @@ import com.example.meetingschedule.databinding.ActivityMainBinding
 import com.example.meetingschedule.viewModel.SharedViewModel
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        var column_id_counter = 1
+    }
+
     private val viewModel: SharedViewModel by lazy {
         ViewModelProvider(this)[SharedViewModel::class.java]
     }

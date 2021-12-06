@@ -114,10 +114,6 @@ class HomeFragment : Fragment() {
         } else if (item.itemId == R.id.push_to_next_day) {
             val splitCurrDate = currDate.split(":")
 
-            Log.w("DAY OF WEEK", Calendar.DAY_OF_WEEK.toString())
-            Log.w("DATE", Calendar.DATE.toString())
-            Log.w("SATURDAY", Calendar.MONDAY.toString())
-
             val gregCalendar: Calendar = GregorianCalendar()
             if (Calendar.DAY_OF_WEEK == 6) {
                 gregCalendar.add(Calendar.DATE, 7) //SATURDAY

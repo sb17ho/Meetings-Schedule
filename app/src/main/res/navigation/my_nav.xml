@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_addMeetingFragment"
             app:destination="@id/addMeetingFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_updateFragment"
+            app:destination="@id/updateFragment" />
     </fragment>
     <fragment
         android:id="@+id/addMeetingFragment"
@@ -28,4 +31,13 @@
         android:name="com.example.meetingschedule.fragments.SummaryFragment"
         android:label="fragment_summary"
         tools:layout="@layout/fragment_summary" />
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.example.meetingschedule.fragments.UpdateFragment"
+        android:label="fragment_update"
+        tools:layout="@layout/fragment_update" >
+        <argument
+            android:name="meetingModel"
+            app:argType="com.example.meetingschedule.model.MeetingModelClass" />
+    </fragment>
 </navigation>

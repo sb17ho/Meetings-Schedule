@@ -130,14 +130,31 @@ class MyDatabaseHelper(context: Context) :
         dbWrite.close()
     }
 
-}
-
-/*dbWrite.execSQL(
-            "DELETE FROM $TABLE_NAME WHERE $NAME_COLUMN = ${meeting.name} AND " +
-                    "$DATE_COLUMN = ${meeting.dd} AND " +
-                    "$MONTH_COLUMN = ${meeting.mm} AND " +
-                    "$YEAR_COLUMN = ${meeting.yy} AND " +
-                    "$START_TIME_COLUMN = ${meeting.startTime} AND " +
-                    "$END_TIME_COLUMN = ${meeting.endTime}"
+    fun updateSelectedMeeting(oldMeeting: MeetingModelClass, newMeeting: MeetingModelClass) {
+        val dbWrite = writableDatabase
+        val contentValues = ContentValues().apply {
+            put(NAME_COLUMN, newMeeting.name)
+            put(DATE_COLUMN, newMeeting.dd)
+            put(MONTH_COLUMN, newMeeting.mm)
+            put(YEAR_COLUMN, newMeeting.yy)
+            put(START_TIME_COLUMN, newMeeting.startTime)
+            put(END_TIME_COLUMN, newMeeting.endTime)
+            put(CONTACT_ID_COLUMN, newMeeting.contactID)
+            put(CONTACT_NAME_COLUMN, newMeeting.contactName)
+            put(CONTACT_NUMBER_COLUMN, newMeeting.contactNumber)
+        }
+        dbWrite.update(
+            TABLE_NAME,
+            contentValues,
+            "$NAME_COLUMN=? and $DATE_COLUMN=? and $MONTH_COLUMN=? and $YEAR_COLUMN=? and $START_TIME_COLUMN=? and $END_TIME_COLUMN=?",
+            arrayOf(
+                oldMeeting.name,
+                oldMeeting.dd.toString(),
+                oldMeeting.mm.toString(),
+                oldMeeting.yy.toString(),
+                oldMeeting.startTime,
+                oldMeeting.endTime
+            )
         )
-        dbWrite.close()*/
+    }
+}

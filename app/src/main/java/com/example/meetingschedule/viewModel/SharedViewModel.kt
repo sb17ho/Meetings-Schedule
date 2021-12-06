@@ -12,6 +12,7 @@ import com.example.meetingschedule.sqlite.MyDatabaseHelper
 class SharedViewModel(application: Application) : AndroidViewModel(application) {
     private val READ_CONTACTS_PERMISSION = 777 // It's an arbitrary value (It can be anything)
     private var READ_PERMISSION_GRANTED = false
+
     private val meetingsList: ArrayList<MeetingModelClass> = ArrayList()
     val liveMeetingsList: MutableLiveData<ArrayList<MeetingModelClass>> = MutableLiveData()
     val liveAllMeetingsList: MutableLiveData<ArrayList<MeetingModelClass>> = MutableLiveData()
@@ -157,6 +158,10 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
     fun deleteSelectedMeeting(meetings: MeetingModelClass) {
         databaseHelper.deleteSelectedMeeting(meetings)
+    }
+
+    fun updateSelectedMeeting(oldMeeting: MeetingModelClass, newMeeting: MeetingModelClass) {
+        databaseHelper.updateSelectedMeeting(oldMeeting, newMeeting)
     }
 
     fun parseMonthIntToString(month: Int): String {

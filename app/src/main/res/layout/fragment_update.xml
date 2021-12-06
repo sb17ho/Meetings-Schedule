@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="8dp"
-    tools:context=".fragments.AddMeetingFragment">
+    tools:context=".fragments.UpdateFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -115,7 +115,6 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/contact_add_id"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center"
@@ -130,39 +129,15 @@
             android:textSize="16sp"
             app:drawableStartCompat="@drawable/ic_baseline_person_24" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:weightSum="100">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/add_contact_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:text="@string/add_contact" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/delete_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:layout_weight="50"
-                android:text="@string/delete_contact" />
-
-        </LinearLayout>
-
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/add_meeting_add_screen"
+            android:id="@+id/update_meeting_button"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:layout_weight="8"
             android:padding="5dp"
-            android:text="@string/add_button" />
+            android:text="@string/update_meeting" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

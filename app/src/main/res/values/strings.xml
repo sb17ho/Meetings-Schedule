@@ -21,4 +21,7 @@
     <string name="push_meetings">Push Meetings</string>
     <string name="home_bottom">Home</string>
     <string name="all_meetings_bottom">All Meetings</string>
+    <string name="update_meeting">Update</string>
+    <string name="add_contact">Add Contact</string>
+    <string name="delete_contact">Delete Contact</string>
 </resources>

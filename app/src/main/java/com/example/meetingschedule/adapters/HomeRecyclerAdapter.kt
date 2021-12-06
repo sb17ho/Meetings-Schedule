@@ -2,8 +2,10 @@ package com.example.meetingschedule.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.meetingschedule.databinding.MeetingsCardViewBinding
+import com.example.meetingschedule.fragments.HomeFragmentDirections
 import com.example.meetingschedule.model.MeetingModelClass
 
 class HomeRecyclerAdapter : RecyclerView.Adapter<HomeRecyclerAdapter.MyRecyclerAdapter>() {
@@ -34,6 +36,12 @@ class HomeRecyclerAdapter : RecyclerView.Adapter<HomeRecyclerAdapter.MyRecyclerA
             val meeting_time =
                 "${meetings_list[position].startTime} - ${meetings_list[position].endTime}"
             meetingTimeId.text = meeting_time
+
+            meetingViewCard.setOnClickListener {
+                root.findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToUpdateFragment(meetings_list[position])
+                )
+            }
         }
     }
 
