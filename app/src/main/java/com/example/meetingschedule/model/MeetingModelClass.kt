@@ -13,7 +13,6 @@ data class MeetingModelClass(
     val startTime: String,
     val endTime: String,
     val contactName: String,
-    val contactID: String,
     val contactNumber: String
 ) : Parcelable {
     override fun equals(other: Any?): Boolean {
@@ -29,7 +28,6 @@ data class MeetingModelClass(
         if (startTime != other.startTime) return false
         if (endTime != other.endTime) return false
         if (contactName != other.contactName) return false
-        if (contactID != other.contactID) return false
         if (contactNumber != other.contactNumber) return false
 
         return true
@@ -43,7 +41,6 @@ data class MeetingModelClass(
         result = 31 * result + startTime.hashCode()
         result = 31 * result + endTime.hashCode()
         result = 31 * result + contactName.hashCode()
-        result = 31 * result + contactID.hashCode()
         result = 31 * result + contactNumber.hashCode()
         return result
     }

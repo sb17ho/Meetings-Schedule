@@ -37,7 +37,8 @@ class HomeFragment : Fragment() {
                 .split(" ")
 
         val listOfAllMeetings = sharedViewModel.readAllMeetings(requireContext())
-        MainActivity.column_id_counter = listOfAllMeetings[listOfAllMeetings.size - 1]._id + 1
+        if (!listOfAllMeetings.isEmpty())
+            MainActivity.column_id_counter = listOfAllMeetings[listOfAllMeetings.size - 1]._id + 1
 
         currDate =
             "${getCurrDate[2]}:${sharedViewModel.parseMonthStringToInt(getCurrDate[1])}:${getCurrDate[5]}"

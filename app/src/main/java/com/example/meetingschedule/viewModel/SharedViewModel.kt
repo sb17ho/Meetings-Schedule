@@ -22,10 +22,6 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         MyDatabaseHelper(application.applicationContext)
     }
 
-    fun readContacts() {
-
-    }
-
     fun setReadContactsPermission(readPermission: Boolean) {
         this.READ_PERMISSION_GRANTED = readPermission
     }
@@ -59,8 +55,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                         startTime = cursor.getString(5),
                         endTime = cursor.getString(6),
                         contactName = cursor.getString(7),
-                        contactID = cursor.getString(8),
-                        contactNumber = cursor.getString(9)
+                        contactNumber = cursor.getString(8)
                     )
                 )
             }
@@ -86,8 +81,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                         startTime = cursor.getString(5),
                         endTime = cursor.getString(6),
                         contactName = cursor.getString(7),
-                        contactID = cursor.getString(8),
-                        contactNumber = cursor.getString(9)
+                        contactNumber = cursor.getString(8)
                     )
                 )
             }

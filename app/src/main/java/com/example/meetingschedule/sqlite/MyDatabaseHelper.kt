@@ -23,7 +23,6 @@ class MyDatabaseHelper(context: Context) :
         private const val START_TIME_COLUMN = "meetings_time_start"
         private const val END_TIME_COLUMN = "meetings_time_end"
         private const val CONTACT_NAME_COLUMN = "meetings_contact_name"
-        private const val CONTACT_ID_COLUMN = "meetings_contact_id"
         private const val CONTACT_NUMBER_COLUMN = "meetings_contact_number"
     }
 
@@ -32,7 +31,7 @@ class MyDatabaseHelper(context: Context) :
         val query: String =
             "CREATE TABLE $TABLE_NAME ($COLUMN_ID INTEGER PRIMARY KEY, $NAME_COLUMN TEXT," +
                     " $DATE_COLUMN INTEGER, $MONTH_COLUMN INTEGER, $YEAR_COLUMN INTEGER, $START_TIME_COLUMN TEXT, $END_TIME_COLUMN TEXT, " +
-                    "$CONTACT_ID_COLUMN TEXT, $CONTACT_NAME_COLUMN TEXT, $CONTACT_NUMBER_COLUMN TEXT)"
+                    "$CONTACT_NAME_COLUMN TEXT, $CONTACT_NUMBER_COLUMN TEXT)"
 
         db.execSQL(query)
     }
@@ -52,7 +51,6 @@ class MyDatabaseHelper(context: Context) :
             put(YEAR_COLUMN, meeting.yy)
             put(START_TIME_COLUMN, meeting.startTime)
             put(END_TIME_COLUMN, meeting.endTime)
-            put(CONTACT_ID_COLUMN, meeting.contactID)
             put(CONTACT_NAME_COLUMN, meeting.contactName)
             put(CONTACT_NUMBER_COLUMN, meeting.contactNumber)
         }
@@ -144,7 +142,6 @@ class MyDatabaseHelper(context: Context) :
             put(YEAR_COLUMN, newMeeting.yy)
             put(START_TIME_COLUMN, newMeeting.startTime)
             put(END_TIME_COLUMN, newMeeting.endTime)
-            put(CONTACT_ID_COLUMN, newMeeting.contactID)
             put(CONTACT_NAME_COLUMN, newMeeting.contactName)
             put(CONTACT_NUMBER_COLUMN, newMeeting.contactNumber)
         }

@@ -31,8 +31,12 @@ class UpdateFragment : Fragment() {
             val date = "${args.meetingModel.dd}:${args.meetingModel.mm}:${args.meetingModel.yy}"
             monthDateStartId.setText(date)
             monthDateEndId.setText(date)
-            //TODO SET CONTACTS INFO TOO
 
+            val contactInfo =
+                "${args.meetingModel.contactName} (${args.meetingModel.contactNumber})"
+            contactInfoView.setText(contactInfo)
+
+            //TODO SET CONTACTS INFO TOO
             updateMeetingButton.setOnClickListener {
                 val dateArr = date.split(":")
                 val modelClass = MeetingModelClass(
@@ -43,9 +47,8 @@ class UpdateFragment : Fragment() {
                     yy = dateArr[2].toInt(),
                     startTime = startTimeId.text.toString(),
                     endTime = endTimeId.text.toString(),
-                    contactID = "null",
-                    contactName = "null",
-                    contactNumber = "null"
+                    contactName = args.meetingModel.contactName,
+                    contactNumber = args.meetingModel.contactNumber
                 )
 
                 sharedViewModel.updateSelectedMeeting(

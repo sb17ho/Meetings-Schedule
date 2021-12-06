@@ -36,6 +36,8 @@ class AddMeetingFragment : Fragment() {
     private val dateArr by lazy { args.date.split(":") }
     private lateinit var hr12CurrTime: String
     private var hr24currTime: Date? = null
+    private var contactName: String? = null
+    private var contactNumber: String? = null
 
     private val result =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -55,9 +57,14 @@ class AddMeetingFragment : Fragment() {
                         null
                     )
                 cursor?.moveToFirst()
+                contactName =
+                    cursor?.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+                contactNumber =
+                    cursor?.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                val contactInfo = "${contactName} (${contactNumber})"
 
                 addFragBind.contactAddId.text =
-                    cursor?.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+                    contactInfo
             }
         }
 
@@ -202,9 +209,8 @@ class AddMeetingFragment : Fragment() {
             yy = dateArr[2].toInt(),
             startTime = addFragBind.startTimeId.text.toString(),
             endTime = addFragBind.endTimeId.text.toString(),
-            contactID = "null",
-            contactName = "null",
-            contactNumber = "null"
+            contactName = (if (contactName == null) "null" else contactName).toString(),
+            contactNumber = (if (contactNumber == null) "null" else contactNumber).toString()
         )
         sharedViewModel.addMeetingsToDatabase(
             modelClass,
