@@ -1,8 +1,14 @@
 package com.example.meetingschedule.fragments
 
+import android.app.Activity
+import android.content.Intent
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.*
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -24,6 +30,34 @@ class HomeFragment : Fragment() {
         ViewModelProvider(this)[SharedViewModel::class.java]
     }
     private lateinit var currDate: String
+
+    private var contactName: String? = null
+    private var contactNumber: String? = null
+    private val result =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val uri = it.data?.data
+                val contactInfoNeeded = arrayOf(
+                    ContactsContract.CommonDataKinds.Phone.NUMBER,
+                    ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
+                )
+
+                val cursor: Cursor? =
+                    requireContext().contentResolver.query(
+                        uri!!,
+                        contactInfoNeeded,
+                        null,
+                        null,
+                        null
+                    )
+                cursor?.moveToFirst()
+                contactName =
+                    cursor?.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+                contactNumber =
+                    cursor?.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                val contactInfo = "${contactName} (${contactNumber})"
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -90,9 +124,44 @@ class HomeFragment : Fragment() {
                 )
                 sharedViewModel.liveMeetingsList.value = sharedViewModel.readMeetingsList()
             }
+
+            override fun onDeleteContactListener(meetings: MeetingModelClass) {
+                val modelClass = MeetingModelClass(
+                    _id = meetings._id, //TODO: Did Change
+                    name = meetings.name,
+                    dd = meetings.dd,
+                    mm = meetings.mm,
+                    yy = meetings.yy,
+                    startTime = meetings.startTime,
+                    endTime = meetings.endTime,
+                    contactName = "null",
+                    contactNumber = "null"
+                )
+
+                sharedViewModel.updateSelectedMeeting(
+                    meetings,
+                    modelClass
+                )
+
+                sharedViewModel.readMeetings(
+                    splitCurrDate[0].toInt(),
+                    splitCurrDate[1].toInt(),
+                    splitCurrDate[2].toInt(),
+                    requireContext()
+                )
+                sharedViewModel.liveMeetingsList.value = sharedViewModel.readMeetingsList()
+            }
         })
 
         return homeBind.root
+    }
+
+    private fun pickContact() {
+        result.launch(
+            Intent(Intent.ACTION_PICK, Uri.parse("content://contacts")).setType(
+                ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE
+            )
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

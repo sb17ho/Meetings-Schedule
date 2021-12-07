@@ -18,6 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.meetingschedule.MainActivity
 import com.example.meetingschedule.databinding.FragmentAddMeetingBinding
@@ -151,6 +152,8 @@ class AddMeetingFragment : Fragment() {
             monthDateStartId.text = args.date
             monthDateEndId.text = args.date
 
+
+
             meetingTitleId.doOnTextChanged { text, _, _, _ ->
                 if (!text.isNullOrBlank()) {
                     meetingTitleId.error = null
@@ -173,6 +176,7 @@ class AddMeetingFragment : Fragment() {
                     meetingTitleId.error = "Field Required"
                 } else {
                     addMeetingToCurrDate()
+                    findNavController().popBackStack()
                 }
             }
         }
@@ -182,7 +186,9 @@ class AddMeetingFragment : Fragment() {
         }
 
         addFragBind.deleteButton.setOnClickListener {
-            addFragBind.contactAddId.text = null
+            addFragBind.contactAddId.text = ""
+            contactName = null
+            contactNumber = null
         }
 
         addFragBind.contactAddId.doOnTextChanged { text, _, _, _ ->

@@ -28,6 +28,10 @@ class HomeRecyclerAdapter : RecyclerView.Adapter<HomeRecyclerAdapter.MyRecyclerA
                             itemOnClick.onItemDeleteListener(meetings_list[adapterPosition])
                             true
                         }
+                        R.id.delete_contact_pop -> {
+                            itemOnClick.onDeleteContactListener(meetings_list[adapterPosition])
+                            true
+                        }
                         else -> {
                             false
                         }
@@ -74,6 +78,10 @@ class HomeRecyclerAdapter : RecyclerView.Adapter<HomeRecyclerAdapter.MyRecyclerA
 
     interface OnItemClickListener {
         fun onItemDeleteListener(
+            meetings: MeetingModelClass
+        )
+
+        fun onDeleteContactListener(
             meetings: MeetingModelClass
         )
     }
