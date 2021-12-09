@@ -80,6 +80,11 @@ class MyDatabaseHelper(context: Context) :
         )
     }
 
+    fun getLastInsertedRow(): Cursor {
+        val dbRead = readableDatabase
+        return dbRead.rawQuery("SELECT * FROM $TABLE_NAME ORDER BY $COLUMN_ID DESC LIMIT 1", null)
+    }
+
     fun deleteAllMeetingsInDatabase() {
         val dbWrite = writableDatabase
         dbWrite.execSQL("DELETE FROM $TABLE_NAME")

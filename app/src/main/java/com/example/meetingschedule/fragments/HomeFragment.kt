@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -30,6 +31,7 @@ class HomeFragment : Fragment() {
         ViewModelProvider(this)[SharedViewModel::class.java]
     }
     private lateinit var currDate: String
+    private lateinit var todaysDate: String
 
     private var contactName: String? = null
     private var contactNumber: String? = null
@@ -70,9 +72,14 @@ class HomeFragment : Fragment() {
             Calendar.getInstance().time.toString()
                 .split(" ")
 
-        val listOfAllMeetings = sharedViewModel.readAllMeetings(requireContext())
-        if (!listOfAllMeetings.isEmpty())
-            MainActivity.column_id_counter = listOfAllMeetings[listOfAllMeetings.size - 1]._id + 1
+        todaysDate = Calendar.getInstance().time.toString().split(" ")[2]
+
+        //TODO DID THIS
+        val listOfAllMeetingsIDs = sharedViewModel.getLastInsertRowId(requireContext())
+        if (!listOfAllMeetingsIDs.isEmpty()) {
+            MainActivity.column_id_counter =
+                listOfAllMeetingsIDs[listOfAllMeetingsIDs.size - 1]._id + 1
+        }
 
         currDate =
             "${getCurrDate[2]}:${sharedViewModel.parseMonthStringToInt(getCurrDate[1])}:${getCurrDate[5]}"
@@ -184,40 +191,48 @@ class HomeFragment : Fragment() {
             Toast.makeText(requireContext(), "All Today's Meetings Deleted", Toast.LENGTH_SHORT)
                 .show()
         } else if (item.itemId == R.id.push_to_next_day) {
-            val splitCurrDate = currDate.split(":")
+            if (currDate.split(":")[0].toInt() == todaysDate.toInt()) {
+                val splitCurrDate = currDate.split(":")
 
-            val gregCalendar: Calendar = GregorianCalendar()
-            val time = gregCalendar.time.toString().split(" ")
+                val gregCalendar: Calendar = GregorianCalendar()
+                val time = gregCalendar.time.toString().split(" ")
 
-            if (time[0].lowercase() == "sat") {
-                gregCalendar.add(Calendar.DATE, 7) //SATURDAY
-            } else if (time[0].lowercase() == "sun") {
-                gregCalendar.add(Calendar.DATE, 6) //SUNDAY
-            } else if (time[0].lowercase() == "mon" ||
-                time[0].lowercase() == "tue" ||
-                time[0].lowercase() == "wed" ||
-                time[0].lowercase() == "thu"
-            ) {
-                gregCalendar.add(Calendar.DATE, 1)
+                if (time[0].lowercase() == "sat") {
+                    gregCalendar.add(Calendar.DATE, 7) //SATURDAY
+                } else if (time[0].lowercase() == "sun") {
+                    gregCalendar.add(Calendar.DATE, 6) //SUNDAY
+                } else if (time[0].lowercase() == "mon" ||
+                    time[0].lowercase() == "tue" ||
+                    time[0].lowercase() == "wed" ||
+                    time[0].lowercase() == "thu"
+                ) {
+                    gregCalendar.add(Calendar.DATE, 1)
+                } else {
+                    gregCalendar.add(Calendar.DATE, 3)
+                }
+                val date = gregCalendar.time.toString().split(" ")
+                sharedViewModel.updateDate(
+                    splitCurrDate[0].toInt(),
+                    splitCurrDate[1].toInt(),
+                    splitCurrDate[2].toInt(),
+                    date[2].toInt(),
+                    sharedViewModel.parseMonthStringToInt(date[1]),
+                    date[5].toInt()
+                )
+                sharedViewModel.readMeetings(
+                    splitCurrDate[0].toInt(),
+                    splitCurrDate[1].toInt(),
+                    splitCurrDate[2].toInt(),
+                    requireContext()
+                )
+                sharedViewModel.liveMeetingsList.value = sharedViewModel.readMeetingsList()
             } else {
-                gregCalendar.add(Calendar.DATE, 3)
+                Toast.makeText(
+                    requireContext(),
+                    "Only Today's Meetings can be pushed",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-            val date = gregCalendar.time.toString().split(" ")
-            sharedViewModel.updateDate(
-                splitCurrDate[0].toInt(),
-                splitCurrDate[1].toInt(),
-                splitCurrDate[2].toInt(),
-                date[2].toInt(),
-                sharedViewModel.parseMonthStringToInt(date[1]),
-                date[5].toInt()
-            )
-            sharedViewModel.readMeetings(
-                splitCurrDate[0].toInt(),
-                splitCurrDate[1].toInt(),
-                splitCurrDate[2].toInt(),
-                requireContext()
-            )
-            sharedViewModel.liveMeetingsList.value = sharedViewModel.readMeetingsList()
         }
         return super.onOptionsItemSelected(item)
     }

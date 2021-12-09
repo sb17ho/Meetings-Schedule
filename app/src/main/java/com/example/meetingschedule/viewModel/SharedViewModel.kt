@@ -17,6 +17,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val liveMeetingsList: MutableLiveData<ArrayList<MeetingModelClass>> = MutableLiveData()
     val liveAllMeetingsList: MutableLiveData<ArrayList<MeetingModelClass>> = MutableLiveData()
     private val allMeetings: ArrayList<MeetingModelClass> = ArrayList()
+    private val allMeetingsLastID: ArrayList<MeetingModelClass> = ArrayList()
 
     private val databaseHelper: MyDatabaseHelper by lazy {
         MyDatabaseHelper(application.applicationContext)
@@ -139,6 +140,31 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     fun deleteAllMeetings() {
         databaseHelper.deleteAllMeetingsInDatabase()
         allMeetings.clear()
+    }
+
+    fun getLastInsertRowId(context: Context): ArrayList<MeetingModelClass> {
+        val cursor: Cursor = databaseHelper.getLastInsertedRow()
+        allMeetingsLastID.clear()
+
+        if (cursor.count != 0) {
+            while (cursor.moveToNext()){
+                allMeetingsLastID.add(
+                    MeetingModelClass(
+                        _id = cursor.getLong(0),
+                        name = cursor.getString(1),
+                        dd = cursor.getInt(2),
+                        mm = cursor.getInt(3),
+                        yy = cursor.getInt(4),
+                        startTime = cursor.getString(5),
+                        endTime = cursor.getString(6),
+                        contactName = cursor.getString(7),
+                        contactNumber = cursor.getString(8)
+                    )
+                )
+            }
+        }
+
+        return allMeetingsLastID
     }
 
     fun updateDate(
