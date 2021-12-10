@@ -110,6 +110,7 @@ class AddMeetingFragment : Fragment() {
                 )
                 timePick.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 timePick.show()
+                endTimeId.text = null
             }
 
             endTimeId.setOnClickListener {
@@ -122,7 +123,15 @@ class AddMeetingFragment : Fragment() {
                         try {
                             val date: Date? = time24Format.parse(timeOfDay)
                             when {
-                                date!!.after(hr24currTime) -> {
+                                date!!.after(
+                                    SimpleDateFormat("HH:mm", Locale.getDefault()).parse(
+                                        SimpleDateFormat("HH:mm", Locale.getDefault()).format(
+                                            SimpleDateFormat("hh:mm aa", Locale.getDefault()).parse(
+                                                startTimeId.text.toString()
+                                            )
+                                        )
+                                    )
+                                ) -> {
                                     val change24To12Hr = SimpleDateFormat("hh:mm aa", Locale.CANADA)
                                     val hr12time = change24To12Hr.format(date)
                                     endTimeId.text = hr12time
